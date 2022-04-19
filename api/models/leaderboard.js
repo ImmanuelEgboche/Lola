@@ -1,9 +1,9 @@
-const db = require('../../dbConfig/init')
+const db = require('../dbConfig/init');
 
 class Player{
     constructor(data) {
         this.id = data.id;
-        this.player = data.player;
+        this.username = data.username;
         this.score = data.score;
     };
 
@@ -12,6 +12,7 @@ class Player{
             try {
                 const playersData = await db.query(`SELECT * FROM players;`)
                 const players = playersData.rows.map(d => new Player(d))
+                console.log(`This is models:${players}`)
                 resolve(players);
             } catch (err) {
                 reject("Error retrieving players")
@@ -19,7 +20,7 @@ class Player{
         })
     }
 
-    static create({ username}) {
+    static create(username, score) {
 		return new Promise(async (res, rej) => {
 			
 			try {
@@ -28,8 +29,8 @@ class Player{
 					[username, score]
 				);
 				
-				let player = new Player(result.rows[0]);
-				res(player);
+				let newPlayer = new Player(result.rows[0]);
+				res(newPlayer);
 			} catch (err) {
 				rej(`Error creating player: ${err}`);
 			}

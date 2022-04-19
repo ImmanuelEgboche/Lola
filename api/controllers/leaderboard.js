@@ -1,14 +1,26 @@
 const Player = require('../models/leaderboard')
 
-// index
+// Gets all routes
 async function index(req, res) {
     try {
+        
         const player = await Player.all;
-        const scores = await player.scores;
-        res.status(200).json({ ...player, scores });
+        console.log(player)
+        const scores = await player.scores; // undefinded
+        console.log(`This is scores: ${scores}`)
+        res.status(200).json({ ...player});
     } catch (err) {
         res.status(500).send(err);
     };
 }
 
-module.exports = { index }
+async function create( req, res) {
+    try { 
+        const player = await Player.create({username: req.body.username, score: req.body.score});
+        res.status(201).json(player)
+    } catch (err) {
+        res.stats(500).send({err});
+    }
+}
+
+module.exports = { index, create }
