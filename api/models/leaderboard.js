@@ -1,4 +1,4 @@
-const db = require('../../dbConfig/init')
+const db = require('../dbConfig/init')
 
 class Player{
     constructor(data) {
