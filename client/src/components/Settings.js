@@ -1,62 +1,79 @@
-import React from 'react';
 import React, { useEffect, useState } from 'react';
+import QuestionSelect from './QuestionSelect'
+import UserInput from './Input';
+import { useSelector, useDispatch } from 'react-redux'
 
 function Settings() {
+  // useState hooks for loading and question options
     const [loading, setLoading] = useState(false);
-    // useState hook 1
+  
     const [options, setOptions] = useState(null);
 
-    // useState hook 2
     const [questionCategory, setQuestionCategory] = useState("");
 
-    // useState hook 3
-    const [questionDifficulty, setQuestionDifficulty] = useState("");
-	
+      // event that is called when an option is chosen
+	  const handleCategoryChange = event => {
+      dispatch({
+        type: 'CHANGE_CATEGORY',
+        value: event.target.value
+      })
+      }
+
+ // defining to dispatch the actions
+  const dispatch = useDispatch()
+
 	// useEffect hook
 	useEffect(() => {
 	    const apiUrl = `https://opentdb.com/api_category.php`;
 	
+      const handleLoadingChange = value => {
+        dispatch({
+          type: 'CHANGE_LOADING',
+          loading: value
+        })
+      }
+
+      handleLoadingChange(true);
 	    fetch(apiUrl)
 	      .then((res) => res.json())
 	      .then((response) => {
 	        setOptions(response.trivia_categories);
 	      });
-	  }, [setOptions]);
+	  }, [setOption, dispatch]);
 
-      // event that is called when an option is chosen
-	const handleCategoryChange = event => {
-        setQuestionCategory(event.target.value)
-      }
-      // event that is called when a difficult is chosen
-    const handleDifficultyChange = event => {
-        setQuestionDifficulty(event.target.value)
-      }
-
-
-
-
+    
 
 if (!loading) {
 	  return (
-		<div>
-            <div>
-              <h2>Select Category:</h2>
-              <select value={questionCategory} onChange={handleCategoryChange}>
-                <option>All</option>
-                  {options && 
-                  options.map((option) => (
-                  <option value={option.id} key={option.id}>
+      <div>
+        <div>
+          <h2>Select Category:</h2>
+          <select value={questionCategory} onChange={handleCategoryChange}>
+            <option>All</option>
+            {options &&
+              options.map((option) => (
+                <option value={option.id} key={option.id}>
                   {option.name}
-                  </option>
-                  ))}
-              </select>
-            </div>
+                </option>
+              ))}
+          </select>
         </div>
-  	  );
+      <QuestionSelect />
+      <button>Next</button>
+      </div>
+    )
   } else {
       <p>
           Loading...
       </p>
   }
-}
+
+      }
+
+
+
+
+
+
+
 export default Settings;
