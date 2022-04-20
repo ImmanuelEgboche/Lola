@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 
 export default function QuestionSelect() {
-    const [options, setOptions] = useState(null);
+  // const [options, setOption] = useState(null);
 
-    const [questionDifficulty, setQuestionDifficulty] = useState("");
+  const questionDifficulty = useSelector(state => state.question_difficulty)
 
-    const [questionType, setQuestionType] = useState("");
+  const questionType = useSelector(state => state.question_type)
 
-	const [numberOfQuestions, setNumberOfQuestions] = useState(10);
+	const numberOfQuestions = useSelector(state => state.amount_of_questions)
 
+   // defining to dispatch the actions
+   const dispatch = useDispatch()
 
       // event that is called when a difficult is chosen
     const handleDifficultyChange = event => {
