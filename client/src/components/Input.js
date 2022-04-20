@@ -12,12 +12,12 @@ export default function UserForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(inputs);
+    alert("Game is about to begin");
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>Enter your names:
+      <label>Please enter your usernames:
       <input 
         type="text" 
         name="player1" 
@@ -37,7 +37,7 @@ export default function UserForm() {
         onChange={handleChange}
       />
       </label>
-      <input type="submit" value = "Load Quizz"/>
+      <input type="submit" value = "Start"/>
     </form>
   )
 }
