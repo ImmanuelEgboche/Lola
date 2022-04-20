@@ -1,104 +1,84 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+// import React, { useState } from "react";
+// import ReactDOM from "react-dom";
 
-export default function UserForm() {
-  const [inputs, setInputs] = useState({});
+// export default function UserForm() {
+//   const [inputs, setInputs] = useState({});
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({...values, [name]: value}))
-  }
+//   const handleChange = (event) => {
+//     const name = event.target.name;
+//     const value = event.target.value;
+//     setInputs(values => ({...values, [name]: value}))
+    
+//   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(inputs);
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     let name = prompt('Enter merchant name');
+//     let email = prompt('Enter merchant email')
+
+//     console.log(name)
+//     console.log(email)
+//     alert(inputs);
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <label>Enter your names:
+//       <input 
+//         type="text" 
+//         name="player1" 
+//         value={inputs.player1 || ""} 
+//         onChange={handleChange}
+//       />
+//       <input 
+//         type="text" 
+//         name="player2" 
+//         value={inputs.player2 || ""} 
+//         onChange={handleChange}
+//       />
+//       <input 
+//         type="text" 
+//         name="player3" 
+//         value={inputs.player3 || ""} 
+//         onChange={handleChange}
+//       />
+//       </label>
+//       <input type="submit" value = "Load Quizz"/>
+//     </form>
+//   )
+// }
+
+import React from "react";
+import { useForm } from "react-hook-form";
+
+export default function App() {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data, e) => submit(data);
+  const onError = (errors, e) => console.log(errors, e);
+
+  function submit (data) {
+    console.log(data)
+    fetch('http://localhost:3000/leaderboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(response => {
+      return response.text();
+    })
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Enter your names:
-      <input 
-        type="text" 
-        name="player1" 
-        value={inputs.player1 || ""} 
-        onChange={handleChange}
-      />
-      <input 
-        type="text" 
-        name="player2" 
-        value={inputs.player2 || ""} 
-        onChange={handleChange}
-      />
-      <input 
-        type="text" 
-        name="player3" 
-        value={inputs.player3 || ""} 
-        onChange={handleChange}
-      />
-      </label>
-      <input type="submit" value = "Load Quizz"/>
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <input {...register("username")} />
+      <button type="submit">Submit</button>
     </form>
-  )
+  );
 }
 
-// class UserInput extends Component {
-//    state = {
-//      player1: "",
-//      player2: "",
-//      player3: "",
-//    }
-
-//       handleState = (event) => {
-//         event.preventDefault();
-//         const name = event.target.name;
-//         const value = event.target.value;
-//         this.setState({...this.state, [name]: value})
-//       }
-      
-    
-//       handleSubmit = (event) => {
-//         event.preventDefault();
-//         this.props.set(this.state);
-//       }
 
 
-//     render (){
-//       console.log(this.state);
-//       return(
-//         <div>
-//         <form onSubmit={this.handleSubmit}>            
-//       <label>Enter player names:
-//       <input 
-//         type="text"
-//         id="P1" 
-//         name="username1" 
-//         placeholder="Player 1"
-//         value={this.state.username1.value} 
-//         onChange={this.handleState}
-//         />
-//         <input 
-//         type="text" 
-//         id="P2"
-//         name="username2" 
-//         placeholder="Player 2"
-//         value={this.state.username2.value} 
-//         onChange={this.handleState}
-//         />
-//         <input 
-//         type="text" 
-//         id="P3"
-//         name="username3" 
-//         placeholder="Player 3"
-//         value={this.state.username3.value} 
-//         onChange={this.handleState}
-//         />
-//         </label>
-//         <input type="submit" value = "Load Quizz"/>
-//         </form>
-//         </div>
-//     )
-//   }
-// }
 
-// export default UserInput
+
+
