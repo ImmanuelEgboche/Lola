@@ -34,8 +34,18 @@ export default function QuestionSelect() {
           })
     }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+  }
+
+
+
     return (
       <div>
+
+      <form role = 'form' onSubmit={handleSubmit}>
+
         <div>
           <h2>Select Difficulty:</h2>
           <select value={questionDifficulty} onChange={handleDifficultyChange}>
@@ -45,6 +55,7 @@ export default function QuestionSelect() {
             <option value="hard" key="difficulty-3">Hard</option>
           </select>
         </div>
+
         <div>
           <h2>Select Question Type:</h2>
           <select value={questionType} onChange={handleTypeChange}>
@@ -53,10 +64,14 @@ export default function QuestionSelect() {
             <option value="boolean" key="type-2">True/False</option>
           </select>
         </div>
-		<div>
+
+		    <div>
           <h2>Amount of Questions:</h2>
           <input value={numberOfQuestions} onChange={handleNumberOfQuestions} placeholder="Number of questions"/>
         </div>
+
+        </form>
+       
       </div>
     );
 }

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import QuestionSelect from './QuestionSelect'
-import UserInput from './Input';
+import QuestionSelect from '../components/QuestionSelect'
+import Input from '../components/Input';
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 function Settings() {
   const [options, setOptions] = useState(null);
   // useState hooks for loading and question options
-  const loading = useSelector(state => state.options.loading)
+  const loading = useSelector((state) => state.options.loading)
   
-  const questionCategory = useSelector(state => state.options.question_category)
+  const questionCategory = useSelector((state) => state.options.question_category)
 
   // defining to dispatch the actions
   const dispatch = useDispatch()
