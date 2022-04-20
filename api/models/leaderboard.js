@@ -36,8 +36,24 @@ class Player{
 		});
 	}
 
+    // static update(username, score) {
+    //     return new Promise(async (res, rej) => {
+    //         try {
+    //             let updateScore = await db.query(
+    //                 "UPDATE players SET score = $2 WHERE username = $1 RETURNING *;",
+    //                 [username, score]
+    //             );
+    //             let newScore = new Player(updateScore.rows[0]);
+    //             res(newScore);
+    //         } catch {
+    //             rej("Error updating score");
+    //         }
+    //         })
+    //     }
+
+    }
 
 
-}
+
 
 module.exports = Player
