@@ -2,50 +2,56 @@ import React, { useEffect, useState } from 'react';
 import QuestionSelect from './QuestionSelect'
 import UserInput from './Input';
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Settings() {
+  const [options, setOptions] = useState(null);
   // useState hooks for loading and question options
-    const [loading, setLoading] = useState(false);
+  const loading = useSelector(state => state.options.loading)
   
-    const [options, setOptions] = useState(null);
+  const questionCategory = useSelector(state => state.options.question_category)
 
-    const [questionCategory, setQuestionCategory] = useState("");
-
-      // event that is called when an option is chosen
-	  const handleCategoryChange = event => {
-      dispatch({
-        type: 'CHANGE_CATEGORY',
-        value: event.target.value
-      })
-      }
-
- // defining to dispatch the actions
+  // defining to dispatch the actions
   const dispatch = useDispatch()
 
-	// useEffect hook
+  // useEffect hook
 	useEffect(() => {
-	    const apiUrl = `https://opentdb.com/api_category.php`;
-	
-      const handleLoadingChange = value => {
+    const apiUrl = `https://opentdb.com/api_category.php`;
+    const handleLoadingChange = value => {
+      dispatch({
+        type: 'CHANGE_LOADING',
+        loading: value
+      })
+    }
+    handleLoadingChange(true);
+    fetch(apiUrl)
+      .then((res) => res.json())
+      .then((response) => {
+        handleLoadingChange(false);
+        setOptions(response.trivia_categories);
+      });
+  }, [setOptions, dispatch]);
+
+      // event that is called when an option is chosen
+      const handleCategoryChange = (event) => {
         dispatch({
-          type: 'CHANGE_LOADING',
-          loading: value
+          type: 'CHANGE_CATEGORY',
+          question_category: event.target.value,
         })
       }
 
-      handleLoadingChange(true);
-	    fetch(apiUrl)
-	      .then((res) => res.json())
-	      .then((response) => {
-	        setOptions(response.trivia_categories);
-	      });
-	  }, [setOption, dispatch]);
+      const navigate = useNavigate();
+      function handleNext() {
+        navigate('/users')
+      }
+      
 
-    
+
 
 if (!loading) {
 	  return (
       <div>
+        <h1>Quizz App</h1>
         <div>
           <h2>Select Category:</h2>
           <select value={questionCategory} onChange={handleCategoryChange}>
@@ -59,7 +65,7 @@ if (!loading) {
           </select>
         </div>
       <QuestionSelect />
-      <button>Next</button>
+      <button onClick={handleNext}>Next</button>
       </div>
     )
   } else {

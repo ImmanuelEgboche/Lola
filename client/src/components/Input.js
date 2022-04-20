@@ -1,70 +1,104 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-export default function UserInput() {
-    const [userInput, setUserInput] = useState();
+export default function UserForm() {
+  const [inputs, setInputs] = useState({});
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}))
-      }
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        alert(userInput);
-      }
-    return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Choose the number of players:
-                <select>
-                    <option id="P1" value="1">1</option>
-                    <option id="P2" value="2">2</option>
-                    <option id="P3" value="3">3</option>
-                    <option id="P4" value="4">4</option>
-                    <option id="P5"value="5">5</option>
-                </select>
-            </label>
-            
-      <label>Enter your names of players:</label>
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs(values => ({...values, [name]: value}))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(inputs);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Enter your names:
       <input 
-        type="text"
-        id="P1" 
-        name="username1" 
-        value={inputs.username1 || ""} 
-        onChange={handleChange}
-        />
-        <input 
         type="text" 
-        id="P2"
-        name="username2" 
-        value={userInput.username || ""} 
+        name="player1" 
+        value={inputs.player1 || ""} 
         onChange={handleChange}
-        />
-        <input 
+      />
+      <input 
         type="text" 
-        id="P3"
-        name="username3" 
-        value={userInput.username || ""} 
+        name="player2" 
+        value={inputs.player2 || ""} 
         onChange={handleChange}
-        />
-        <input 
+      />
+      <input 
         type="text" 
-        id="P4"
-        name="username4" 
-        value={userInput.username || ""} 
+        name="player3" 
+        value={inputs.player3 || ""} 
         onChange={handleChange}
-        />
-        <input 
-        type="text" 
-        id="P5"
-        name="username5" 
-        value={userInput.username || ""} 
-        onChange={handleChange}
-        />
-        <input type="submit" value = "Load Quizz"/>
-        </form>
-    )
+      />
+      </label>
+      <input type="submit" value = "Load Quizz"/>
+    </form>
+  )
 }
 
+// class UserInput extends Component {
+//    state = {
+//      player1: "",
+//      player2: "",
+//      player3: "",
+//    }
+
+//       handleState = (event) => {
+//         event.preventDefault();
+//         const name = event.target.name;
+//         const value = event.target.value;
+//         this.setState({...this.state, [name]: value})
+//       }
+      
+    
+//       handleSubmit = (event) => {
+//         event.preventDefault();
+//         this.props.set(this.state);
+//       }
+
+
+//     render (){
+//       console.log(this.state);
+//       return(
+//         <div>
+//         <form onSubmit={this.handleSubmit}>            
+//       <label>Enter player names:
+//       <input 
+//         type="text"
+//         id="P1" 
+//         name="username1" 
+//         placeholder="Player 1"
+//         value={this.state.username1.value} 
+//         onChange={this.handleState}
+//         />
+//         <input 
+//         type="text" 
+//         id="P2"
+//         name="username2" 
+//         placeholder="Player 2"
+//         value={this.state.username2.value} 
+//         onChange={this.handleState}
+//         />
+//         <input 
+//         type="text" 
+//         id="P3"
+//         name="username3" 
+//         placeholder="Player 3"
+//         value={this.state.username3.value} 
+//         onChange={this.handleState}
+//         />
+//         </label>
+//         <input type="submit" value = "Load Quizz"/>
+//         </form>
+//         </div>
+//     )
+//   }
+// }
+
+// export default UserInput
