@@ -1,0 +1,42 @@
+services:
+  client:
+    container_name: quizzo_client
+    build: ./client
+    image: quizzo_client
+    ports: 
+      - 8080:8080
+    working_dir: /code
+    volumes:
+      - type: bind
+        source: ./client
+        target: /code
+    command: [ "http-server" ]
+  api:
+    container_name: quizzo_dev_api
+    ports: 
+      - 3000:3000
+    environment: 
+      - PGUSER=quizzo
+      - PGHOST=db
+      - PGPASSWORD=quizpass
+      - PGDATABASE=quiz
+      - PGPORT=5432
+      - NODE_ENV=development
+    depends_on:
+      - db
+    command: bash -c "npm install && npm run seedDev && npm run dev"
+
+  db:
+    container_name: quizzo_dev_db
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    environment: 
+      - POSTGRES_DB=quiz
+      - POSTGRES_USER=quizzo
+      - POSTGRES_PASSWORD=quizpass
+volumes:
+  dbdata:
+networks: 
+  default:
+    name: quizzo_api
+    

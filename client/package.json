@@ -37,9 +37,9 @@
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",
-    "redux": "^4.0.5"
+    "redux": "^4.2.0"
   },
   "bugs": {
     "url": "https://github.com/ImmanuelEgboche/Lola/issues"
