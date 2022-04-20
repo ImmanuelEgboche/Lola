@@ -2,7 +2,7 @@ import Settings from './Components/Settings';
 import Input from './components/Input'
 import React from 'react';
 import { Route, Routes } from 'react-router-dom'
-import '../src/app'
+import './app.css'
 
 
 

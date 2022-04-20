@@ -16,8 +16,8 @@ export default function UserForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Please enter your usernames:
+    <form id onSubmit={handleSubmit}>
+      <label id ="user">Please enter your usernames:
       <input 
         type="text" 
         name="player1" 
@@ -37,7 +37,7 @@ export default function UserForm() {
         onChange={handleChange}
       />
       </label>
-      <input type="submit" value = "Start"/>
+      <input id = "btn" type="submit" value = "Start"/>
     </form>
   )
 }
