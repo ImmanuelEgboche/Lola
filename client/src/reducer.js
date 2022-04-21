@@ -4,7 +4,7 @@ const initState = {
     question_category: ``,
     question_difficulty: ``,
     question_type: ``,
-    amount_of_questions: 10,
+    amount_of_questions: 2,
   },
   questions: [],
   index: 0,
@@ -13,12 +13,12 @@ const initState = {
   const Reducer = (state = initState, action) => {
     switch (action.type) {
       case "LOADING":
-         return {...state, options: {
+        return {...state, options: {
           ...state.options,
           loading: action.value
         }};
       case "CHANGE_CATEGORY":
-         return {...state,  options: {
+        return {...state,  options: {
           ...state.options,
           question_category: action.value
         }}
@@ -31,7 +31,33 @@ const initState = {
         return {...state, options: {
           ...state.options,
           question_type: action.value
-        }}  
+        }}
+        case 'CHANGE_AMOUNT':
+          return {
+            ...state,
+            options: {
+              ...state.options,
+              amount_of_questions: action.amount_of_questions,
+            },
+          }
+    
+        case 'SET_QUESTIONS':
+          return {
+            ...state,
+            questions: action.questions,
+          }
+    
+        case 'SET_INDEX':
+          return {
+            ...state,
+            index: action.index,
+          }
+    
+        case 'SET_SCORE':
+          return {
+            ...state,
+            score: action.score,
+          }
 
       default:
         return state

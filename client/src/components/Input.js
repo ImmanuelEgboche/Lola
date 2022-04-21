@@ -51,6 +51,7 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
   const { register, handleSubmit } = useForm();
@@ -70,12 +71,20 @@ export default function App() {
     })
   }
 
+  const navigate = useNavigate();
+      function handleNext() {
+        navigate('/quiz')
+      }
+
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit, onError)}>
       <input {...register("username")} />
       <button type="submit">Submit</button>
 
     </form>
+    <button onClick={handleNext}>Next</button>
+    </>
   );
 }
 
