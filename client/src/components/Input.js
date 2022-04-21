@@ -21,6 +21,7 @@
 //     alert(inputs);
 //   }
 
+
 //   return (
 //     <form onSubmit={handleSubmit}>
 //       <label>Enter your names:
@@ -80,6 +81,7 @@ export default function App() {
     <form onSubmit={handleSubmit(onSubmit, onError)}>
       <input {...register("username")} />
       <button type="submit">Submit</button>
+
     </form>
     <button onClick={handleNext}>Next</button>
     </>
