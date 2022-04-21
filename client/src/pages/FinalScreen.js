@@ -1,8 +1,10 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { handleAmountChange, handleScoreChange } from "../redux/action";
 import Button from 'react-bootstrap/Button';
+import User from './input'
 
 const FinalScreen = () => {
   const disptach = useDispatch();
@@ -16,12 +18,18 @@ const FinalScreen = () => {
   };
 
   return (
-    <div>
-        FinalScore {score}
-
+    <div id="db">
+      <User />
+      
+        FinalScore {score}  
+        
+      <div>
       <Button onClick={handleBackToSettings} variant="outlined">
-        back to settings!
+        back to Home!
       </Button>
+      </div>
+
+
   </div>
   );
 };
