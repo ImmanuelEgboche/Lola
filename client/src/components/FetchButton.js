@@ -1,74 +1,73 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+// import React from 'react'
+// import { useSelector, useDispatch } from 'react-redux'
 
-function FetchButton(props) {
-  const questionCategory = useSelector(
-    (state) => state.options.question_category
-  )
-  const questionDifficulty = useSelector(
-    (state) => state.options.question_difficulty
-  )
-  const questionType = useSelector((state) => state.options.question_type)
-  const questionAmount = useSelector(
-    (state) => state.options.amount_of_questions
-  )
-  const questionIndex = useSelector((state) => state.index)
+// export default function FetchButton(props) {
+//     // this will be used to construct API query 
+//   const questionCategory = useSelector((state) => state.question_category)
 
-  const dispatch = useDispatch()
+//   const questionDifficulty = useSelector((state) => state.question_difficulty)
 
-  const setLoading = (value) => {
-    dispatch({
-      type: 'CHANGE_LOADING',
-      loading: value,
-    })
-  }
+//   const questionType = useSelector((state) => state.question_type)
 
-  const setQuestions = (value) => {
-    dispatch({
-      type: 'SET_QUESTIONS',
-      questions: value,
-    })
-  }
+//   const questionAmount = useSelector((state) => state.amount_of_questions)
 
-  const handleQuery = async () => {
-    let apiUrl = `https://opentdb.com/api.php?amount=${questionAmount}`
+//   const questionIndex = useSelector((state) => state.index)
 
-    if (questionCategory.length) {
-      apiUrl = apiUrl.concat(`&category=${questionCategory}`)
-    }
+//   const dispatch = useDispatch()
 
-    if (questionDifficulty.length) {
-      apiUrl = apiUrl.concat(`&difficulty=${questionDifficulty}`)
-    }
+//     const setLoading = (value) => {
+//     dispatch({
+//       type: 'CHANGE_LOADING',
+//       loading: value,
+//     })
+//   }
 
-    if (questionType.length) {
-      apiUrl = apiUrl.concat(`&type=${questionType}`)
-    }
+//   const setQuestions = (value) => {
+//     dispatch({
+//       type: 'SET_QUESTIONS',
+//       questions: value,
+//     })
+//   }
 
-    setLoading(true)
+//   const handleQuery = async () => {
+//     let apiUrl = `https://opentdb.com/api.php?amount=${questionAmount}`
 
-    await fetch(apiUrl)
-      .then((res) => res.json())
-      .then((response) => {
-        setQuestions(response.results)
-        setLoading(false)
-      })
+//     if (questionCategory.length) {
+//       apiUrl = apiUrl.concat(`&category=${questionCategory}`)
+//     }
 
-    if (questionIndex > 0) {
-      dispatch({
-        type: 'SET_INDEX',
-        index: 0,
-      })
+//     if (questionDifficulty.length) {
+//       apiUrl = apiUrl.concat(`&difficulty=${questionDifficulty}`)
+//     }
 
-      dispatch({
-        type: 'SET_SCORE',
-        score: 0,
-      })
-    }
-  }
+//     if (questionType.length) {
+//       apiUrl = apiUrl.concat(`&type=${questionType}`)
+//     }
 
-  return <button onClick={handleQuery}>{props.text}</button>
-  
+//     setLoading(true)
 
-}
+//     await fetch(apiUrl)
+//       .then((res) => res.json())
+//       .then((response) => {
+//         setQuestions(response.results)
+//         setLoading(false)
+//       })
+
+//     if (questionIndex > 0) {
+//       dispatch({
+//         type: 'SET_INDEX',
+//         index: 0,
+//       })
+
+//       dispatch({
+//         type: 'SET_SCORE',
+//         score: 0,
+//       })
+//     }
+//   }
+
+//   return <button onClick={handleQuery}>{props.text}</button>
+// }
+
+
 export default FetchButton
