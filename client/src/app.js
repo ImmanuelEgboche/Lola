@@ -5,6 +5,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom'
 import '../src/app'
 import Questions from './pages/Question';
+import './app.css'
 
 
 

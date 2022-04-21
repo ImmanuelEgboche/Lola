@@ -18,13 +18,12 @@ const FinalScreen = () => {
   };
 
   return (
-    <div id="db">
-      <User />
-      
-        FinalScore {score}  
-        
-      <div>
-      <Button onClick={handleBackToSettings} variant="outlined">
+    <div >
+            
+        <h3 id = "score">Final Score: {score} </h3>
+        <User />
+      <div >
+      <Button id = "final" onClick={handleBackToSettings} variant="outlined">
         back to Home!
       </Button>
       </div>

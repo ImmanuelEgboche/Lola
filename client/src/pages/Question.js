@@ -70,7 +70,7 @@ console.log(response)
   };
 
   return (
-    <div>
+    <div id = "appMain">
         
         {!response ? 'Loading' : response.results[questionIndex].question }
       {options.map((data, id) => (

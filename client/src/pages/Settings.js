@@ -49,7 +49,9 @@ const handleSubmit = (e) => {
 };
 
 return (
-  <form onSubmit={handleSubmit}>
+     <div id="appMain">
+    <h1 id = "title">Welcome to LOLA Quizz</h1>
+    <form  onSubmit={handleSubmit}>
     <SelectField options={response.trivia_categories} label="Category" />
     <SelectField options={difficultyOptions} label="Difficulty" />
     <SelectField options={typeOptions} label="Type" />
@@ -60,6 +62,7 @@ return (
         
       
   </form>
+  </div>
 );
 };
 

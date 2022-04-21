@@ -21,8 +21,8 @@ export default function User() {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit, onError)}>
-      <input {...register("username")} />
-      <button type="submit">Submit</button>
+      <input id ="user" {...register("username")} />
+      <button id = "final" type="submit">Submit</button>
     </form>
     </>
   );
