@@ -17,6 +17,20 @@ const FinalScreen = () => {
     navigate("/");
   };
 
+submit(score)
+
+  function submit (score) {
+    fetch('http://localhost:3000/leaderboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({score}),
+    }).then(response => {
+      return response.text();
+    })
+  }
+
   return (
     <div id="db">
       <User />
