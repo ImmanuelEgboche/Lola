@@ -24,6 +24,10 @@ class Player{
 		return new Promise(async (res, rej) => {
 			
 			try {
+                
+                console.log(typeof username)
+                const hope = Object.values(username)
+                username = hope[0]
 				let result = await db.query(
 					`INSERT INTO players (username, score) VALUES ($1, $2) RETURNING *;`,
 					[username, score]

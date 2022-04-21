@@ -19,7 +19,7 @@ async function create( req, res) {
         const player = await Player.create({username: req.body.username, score: req.body.score});
         res.status(201).json(player)
     } catch (err) {
-        res.stats(500).send({err});
+        res.status(500).send({err});
     }
 }
 
