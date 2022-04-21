@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={ <Settings />}/>
         <Route path='/questions' element={<Questions />} />
         {/* <Route path="/users" element={ <Input />}/> */}
-        {/* <Route path="/scores" element={ <FinalScreen/>} /> */}
+        <Route path="/score" element={ <FinalScreen/>} />
       </Routes>
      
   );
