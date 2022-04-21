@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 
 export default function QuestionSelect() {
-    const [options, setOptions] = useState(null);
+  // const [options, setOption] = useState(null);
 
-    const [questionDifficulty, setQuestionDifficulty] = useState("");
+  const questionDifficulty = useSelector(state => state.question_difficulty)
 
-    const [questionType, setQuestionType] = useState("");
+  const questionType = useSelector(state => state.question_type)
 
-	const [numberOfQuestions, setNumberOfQuestions] = useState(10);
+	const numberOfQuestions = useSelector(state => state.amount_of_questions)
 
+   // defining to dispatch the actions
+   const dispatch = useDispatch()
 
       // event that is called when a difficult is chosen
     const handleDifficultyChange = event => {
@@ -31,8 +34,18 @@ export default function QuestionSelect() {
           })
     }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+  }
+
+
+
     return (
       <div>
+
+      <form role = 'form' onSubmit={handleSubmit}>
+
         <div>
           <h2>Select Difficulty:</h2>
           <select value={questionDifficulty} onChange={handleDifficultyChange}>
@@ -42,6 +55,7 @@ export default function QuestionSelect() {
             <option value="hard" key="difficulty-3">Hard</option>
           </select>
         </div>
+
         <div>
           <h2>Select Question Type:</h2>
           <select value={questionType} onChange={handleTypeChange}>
@@ -50,10 +64,14 @@ export default function QuestionSelect() {
             <option value="boolean" key="type-2">True/False</option>
           </select>
         </div>
-		<div>
+
+		    <div>
           <h2>Amount of Questions:</h2>
           <input value={numberOfQuestions} onChange={handleNumberOfQuestions} placeholder="Number of questions"/>
         </div>
+
+        </form>
+       
       </div>
     );
 }

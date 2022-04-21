@@ -1,16 +1,24 @@
-import Settings from './Components/Settings';
+import Settings from './pages/Settings';
+// import Input from './components/Input'
+import FinalScreen from './pages/FinalScreen'
 import React from 'react';
+import { Route, Routes } from 'react-router-dom'
+import '../src/app'
+import Questions from './pages/Question';
 
 
 
 function App() {
   return (
-    <>
-    <div className="App">
-      <h1>Quiz App</h1>
-      <Settings />
-    </div>
-    </>
+    
+      <Routes>
+        <Route path="/" element={ <Settings />}/>
+        <Route path='/questions' element={<Questions />} />
+        {/* <Route path="/users" element={ <Input />}/> */}
+        {/* <Route path="/scores" element={ <FinalScreen/>} /> */}
+      </Routes>
+     
   );
 }
+
 export default App;
