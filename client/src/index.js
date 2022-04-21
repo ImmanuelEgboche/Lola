@@ -8,15 +8,14 @@ import reducer from './redux/reducer';
 
 
 ReactDOM.render(
-   <React.StrictMode>
        <Provider store={store}>
-        
+        <Router>
            <App />
-        
-       </Provider>
-   </React.StrictMode>,
+        </Router>
+       </Provider>,
 
 
 document.getElementById("root"));
+
 
 
