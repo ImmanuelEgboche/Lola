@@ -3,13 +3,18 @@ import QuestionSelect from './QuestionSelect'
 import UserInput from './Input';
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import FetchButton from './FetchButton';
 
 function Settings() {
   const [options, setOptions] = useState(null);
   // useState hooks for loading and question options
-  const loading = useSelector(state => state.options.loading)
+  const  loading =  useSelector((state) => state.options.loading)
   
   const questionCategory = useSelector(state => state.options.question_category)
+  const questionDifficulty = useSelector(
+    (state) => state.options.question_difficulty)
+    const questionType = useSelector((state) => state.options.question_type)
+    const questionAmount = useSelector((state) => state.options.amount_of_questions)
 
   // defining to dispatch the actions
   const dispatch = useDispatch()
@@ -32,6 +37,27 @@ function Settings() {
       });
   }, [setOptions, dispatch]);
 
+  const handleDifficultyChange = (event) => {
+    dispatch({
+      type: 'CHANGE_DIFFICULTY',
+      question_difficulty: event.target.value,
+    })
+  }
+
+  const handleTypeChange = (event) => {
+    dispatch({
+      type: 'CHANGE_TYPE',
+      question_type: event.target.value,
+    })
+  }
+
+  const handleAmountChange = (event) => {
+    dispatch({
+      type: 'CHANGE_AMOUNT',
+      amount_of_questions: event.target.value,
+    })
+  }
+
       // event that is called when an option is chosen
       const handleCategoryChange = (event) => {
         dispatch({
@@ -40,46 +66,75 @@ function Settings() {
         })
       }
 
-      const navigate = useNavigate();
-      function handleNext() {
-        navigate('/users')
-      }
+      // const navigate = useNavigate();
+      // function handleNext() {
+      //   navigate('/users')
+      // }
       
 
 
 
-if (!loading) {
-	  return (
-      <div>
-        <h1>Quizz App</h1>
-        <div>
-          <h2>Select Category:</h2>
-          <select value={questionCategory} onChange={handleCategoryChange}>
-            <option>All</option>
-            {options &&
-              options.map((option) => (
-                <option value={option.id} key={option.id}>
-                  {option.name}
+      if (!loading) {
+        return (
+          <div>
+            <h1>Quiz App</h1>
+            <div>
+              <h2>Select Category:</h2>
+              <select value={questionCategory} onChange={handleCategoryChange}>
+                <option>All</option>
+                {options &&
+                  options.length &&
+                  options.map((option) => (
+                    <option value={option.id} key={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+    
+            <div>
+              <h2>Select Difficulty:</h2>
+              <select value={questionDifficulty} onChange={handleDifficultyChange}>
+                <option value="" key="difficulty-0">
+                  All
                 </option>
-              ))}
-          </select>
-        </div>
-      <QuestionSelect />
-      <button onClick={handleNext}>Next</button>
-      </div>
-    )
-  } else {
-      <p>
-          Loading...
-      </p>
-  }
-
+                <option value="easy" key="difficulty-1">
+                  Easy
+                </option>
+                <option value="medium" key="difficulty-2">
+                  Medium
+                </option>
+                <option value="hard" key="difficulty-3">
+                  Hard
+                </option>
+              </select>
+            </div>
+    
+            <div>
+              <h2>Select Question Type:</h2>
+              <select value={questionType} onChange={handleTypeChange}>
+                <option value="" key="type-0">
+                  All
+                </option>
+                <option value="multiple" key="type-1">
+                  Multiple Choice
+                </option>
+                <option value="boolean" key="type-2">
+                  True/False
+                </option>
+              </select>
+            </div>
+    
+            <div>
+              <h2>Amount of Questions:</h2>
+              <input value={questionAmount} onChange={handleAmountChange} />
+            </div>
+    
+            <FetchButton text="Get started!" />
+          </div>
+        )
       }
-
-
-
-
-
-
-
-export default Settings;
+    
+      return <p>LOADING...</p>
+    }
+    export default Settings

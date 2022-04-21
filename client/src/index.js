@@ -5,16 +5,18 @@ import { BrowserRouter as Router} from 'react-router-dom';
 // import store from './store';
 import App from './app';
 import Reducer from './Reducer'
-import { createStore } from 'redux';
+import {legacy_createStore as createStore } from 'redux';
 
 const store = createStore(Reducer);
 
 ReactDOM.render(
+   <React.StrictMode>
        <Provider store={store}>
-        <Router>
+        
            <App />
-        </Router>
-       </Provider>,
+        
+       </Provider>
+   </React.StrictMode>,
 
 
 document.getElementById("root"));
