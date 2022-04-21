@@ -1,85 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import QuestionSelect from '../components/QuestionSelect'
-import Input from '../components/Input';
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from "react-router-dom";
+import SelectField from "../components/SelectField";
+import TextFieldComp from "../components/TextFieldComp";
+import useAxios from "../hooks/useAxios";
+import Button from 'react-bootstrap/Button';
 
-function Settings() {
-  const [options, setOptions] = useState(null);
-  // useState hooks for loading and question options
-  const loading = useSelector((state) => state.options.loading)
-  
-  const questionCategory = useSelector((state) => state.options.question_category)
 
-  // defining to dispatch the actions
-  const dispatch = useDispatch()
+const Settings = () => {
+  const { response, error, loading } = useAxios({ url: "/api_category.php" });
+  const navigate = useNavigate();
 
-  // useEffect hook
-	useEffect(() => {
-    const apiUrl = `https://opentdb.com/api_category.php`;
-    const handleLoadingChange = value => {
-      dispatch({
-        type: 'CHANGE_LOADING',
-        loading: value
-      })
-    }
-    handleLoadingChange(true);
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((response) => {
-        handleLoadingChange(false);
-        setOptions(response.trivia_categories);
-      });
-  }, [setOptions, dispatch]);
 
-      // event that is called when an option is chosen
-      const handleCategoryChange = (event) => {
-        dispatch({
-          type: 'CHANGE_CATEGORY',
-          question_category: event.target.value,
-        })
-      }
 
-      const navigate = useNavigate();
-      function handleNext() {
-        navigate('/users')
-      }
+
+
+if (loading) {
+  return (
+    <div>
+      Loading..
+    </div>
+  );
+}
+
+if (error) {
+  return (
+    <div>
+      Something Went Wrong!
+    </div>
+    
+  );
+}
+
+
+const difficultyOptions = [
+  { id: "easy", name: "Easy" },
+  { id: "medium", name: "Medium" },
+  { id: "hard", name: "Hard" },
+];
+
+const typeOptions = [
+  { id: "multiple", name: "Multiple Choise" },
+  { id: "boolean", name: "True/False" },
+];
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  navigate("/questions");
+};
+
+return (
+  <form onSubmit={handleSubmit}>
+    <SelectField options={response.trivia_categories} label="Category" />
+    <SelectField options={difficultyOptions} label="Difficulty" />
+    <SelectField options={typeOptions} label="Type" />
+    <TextFieldComp />
+    <Button  type="submit">
+          Get Started
+        </Button>
+        
       
-
-
-
-if (!loading) {
-	  return (
-      <div>
-        <h1>Quizz App</h1>
-        <div>
-          <h2>Select Category:</h2>
-          <select value={questionCategory} onChange={handleCategoryChange}>
-            <option>All</option>
-            {options &&
-              options.map((option) => (
-                <option value={option.id} key={option.id}>
-                  {option.name}
-                </option>
-              ))}
-          </select>
-        </div>
-      <QuestionSelect />
-      <button onClick={handleNext}>Next</button>
-      </div>
-    )
-  } else {
-      <p>
-          Loading...
-      </p>
-  }
-
-      }
-
-
-
-
-
-
+  </form>
+);
+};
 
 export default Settings;

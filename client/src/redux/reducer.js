@@ -10,6 +10,11 @@ const initState = {
 }
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case 'GET_QUIZ':
+      return {
+        ...state,
+        quiz: action.payload
+      };
     case 'CHANGE_CATEGORY':
       return {
         ...state,
@@ -35,6 +40,7 @@ const reducer = (state = initState, action) => {
         ...state,
         score: action.payload,
       };
+      default: return state
 
     }
   }

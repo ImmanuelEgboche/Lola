@@ -1,124 +1,92 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useAxios from "../hooks/useAxios";
+import { handleScoreChange } from "../redux/action";
+import Button from 'react-bootstrap/Button';
+import { decode } from "html-entities";
 
-const decodeHTML = function (html) {
-  const txt = document.createElement('textarea')
-  txt.innerHTML = html
-  return txt.value
-}
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
 
-function Question() {
-  const [questions, setQuestions] = useState([])
-  const [answerSelected, setAnswerSelected] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState(null)
-  const [options, setOptions] = useState([])
+const Questions = () => {
+  const {
+    question_category,
+    question_difficulty,
+    question_type,
+    amount_of_question,
+    score,
+  } = useSelector((state) => state);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const score = useSelector((state) => state.score)
-  const encodedQuestions = useSelector((state) => state.questions)
+  let apiUrl = `/api.php?amount=${amount_of_question}`;
+  if (question_category) {
+    apiUrl = apiUrl.concat(`&category=${question_category}`);
+  }
+  if (question_difficulty) {
+    apiUrl = apiUrl.concat(`&difficulty=${question_difficulty}`);
+  }
+  if (question_type) {
+    apiUrl = apiUrl.concat(`&type=${question_type}`);
+  }
+
+  const { response, loading } = useAxios({ url: apiUrl });
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [options, setOptions] = useState([]);
+
+console.log(response)
 
   useEffect(() => {
-    const decodedQuestions = encodedQuestions.map(q => {
-      return {
-        ...q,
-        question: decodeHTML(q.question),
-        correct_answer: decodeHTML(q.correct_answer),
-        incorrect_answers: q.incorrect_answers.map(a => decodeHTML(a))
-      }
-    })
-
-    setQuestions(decodedQuestions)
-  }, [encodedQuestions])
-  const questionIndex = useSelector((state) => state.index)
-
-  const dispatch = useDispatch()
-
-  const question = questions[questionIndex]
-  const answer = question && question.correct_answer
-
-  const getRandomInt = (max) => {
-    return Math.floor(Math.random() * Math.floor(max))
-  }
-
-  useEffect(() => {
-    if (!question) {
-      return;
+    if (response?.results.length) {
+      const question = response.results[questionIndex];
+      let answers = [...question.incorrect_answers];
+      answers.splice(
+        getRandomInt(question.incorrect_answers.length),
+        0,
+        question.correct_answer
+      );
+      setOptions(answers);
+      dispatch({type:'GET_QUIZ', payload: response})
     }
-    let answers = [...question.incorrect_answers]
-    answers.splice(getRandomInt(question.incorrect_answers.length), 0, question.correct_answer)
+  }, [response, questionIndex]);
+  
 
-    setOptions(answers)
-  }, [question])
 
-  const handleListItemClick = (event) => {
-    setAnswerSelected(true)
-    setSelectedAnswer(event.target.textContent)
-
-    if (event.target.textContent === answer) {
-      dispatch({
-        type: 'SET_SCORE',
-        score: score + 1,
-      })
+  const handleClickAnswer = (e) => {
+    const question = response.results[questionIndex];
+    if (e.target.textContent === question.correct_answer) {
+      dispatch(handleScoreChange(score + 1));
     }
 
-    if (questionIndex + 1 <= questions.length) {
-      setTimeout(() => {
-        setAnswerSelected(false)
-        setSelectedAnswer(null)
-
-        dispatch({
-          type: 'SET_INDEX',
-          index: questionIndex + 1,
-        })
-      }, 2500)
+    if (questionIndex + 1 < response.results.length) {
+      setQuestionIndex(questionIndex + 1);
+    } else {
+      navigate("/score");
     }
-  }
-
-  /*
-    {
-      "category": "Entertainment: Video Games",
-      "type": "boolean",
-      "difficulty": "easy",
-      "question": "Peter Molyneux was the founder of Bullfrog Productions.",
-      "correct_answer": "True",
-      "incorrect_answers": [
-        "False"
-      ]
-    }
-  */
-
-  const getClass = option => {
-    if (!answerSelected) {
-      return ``;
-    }
-
-    if (option === answer) {
-      return `correct`
-    }
-
-    if (option === selectedAnswer) {
-      return `selected`
-    }
-  }
-
-  if (!question) {
-    return <div>Loading</div>
-  }
+  };
 
   return (
     <div>
-      <p>Question {questionIndex + 1}</p>
-      <h3>{question.question}</h3>
-      <ul>
-        {options.map((option, i) => (
-          <li key={i} onClick={handleListItemClick} className={getClass(option)}>
-            {option}
-          </li>
-        ))}
-      </ul>
-      <div>
-        Score: {score} / {questions.length}
-      </div>
-    </div>
+        
+        {!response ? 'Loading' : response.results[questionIndex].question }
+      {options.map((data, id) => (
+
+        <div key={id}>
+          <Button onClick={handleClickAnswer} variant="contained">
+            {data}
+          </Button>
+        </div>
+          
+
+      ))}
+        Score: {score} / {!response ? 'loading' : response.results.length}
+        </div>
   )
-}
-export default Question
+      
+};
+
+export default Questions;

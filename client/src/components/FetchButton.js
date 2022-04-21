@@ -1,71 +1,71 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+// import React from 'react'
+// import { useSelector, useDispatch } from 'react-redux'
 
-export default function FetchButton(props) {
-    // this will be used to construct API query 
-  const questionCategory = useSelector((state) => state.options.question_category)
+// export default function FetchButton(props) {
+//     // this will be used to construct API query 
+//   const questionCategory = useSelector((state) => state.question_category)
 
-  const questionDifficulty = useSelector((state) => state.options.question_difficulty)
+//   const questionDifficulty = useSelector((state) => state.question_difficulty)
 
-  const questionType = useSelector((state) => state.options.question_type)
+//   const questionType = useSelector((state) => state.question_type)
 
-  const questionAmount = useSelector((state) => state.options.amount_of_questions)
+//   const questionAmount = useSelector((state) => state.amount_of_questions)
 
-  const questionIndex = useSelector((state) => state.index)
+//   const questionIndex = useSelector((state) => state.index)
 
-  const dispatch = useDispatch()
+//   const dispatch = useDispatch()
 
-    const setLoading = (value) => {
-    dispatch({
-      type: 'CHANGE_LOADING',
-      loading: value,
-    })
-  }
+//     const setLoading = (value) => {
+//     dispatch({
+//       type: 'CHANGE_LOADING',
+//       loading: value,
+//     })
+//   }
 
-  const setQuestions = (value) => {
-    dispatch({
-      type: 'SET_QUESTIONS',
-      questions: value,
-    })
-  }
+//   const setQuestions = (value) => {
+//     dispatch({
+//       type: 'SET_QUESTIONS',
+//       questions: value,
+//     })
+//   }
 
-  const handleQuery = async () => {
-    let apiUrl = `https://opentdb.com/api.php?amount=${questionAmount}`
+//   const handleQuery = async () => {
+//     let apiUrl = `https://opentdb.com/api.php?amount=${questionAmount}`
 
-    if (questionCategory.length) {
-      apiUrl = apiUrl.concat(`&category=${questionCategory}`)
-    }
+//     if (questionCategory.length) {
+//       apiUrl = apiUrl.concat(`&category=${questionCategory}`)
+//     }
 
-    if (questionDifficulty.length) {
-      apiUrl = apiUrl.concat(`&difficulty=${questionDifficulty}`)
-    }
+//     if (questionDifficulty.length) {
+//       apiUrl = apiUrl.concat(`&difficulty=${questionDifficulty}`)
+//     }
 
-    if (questionType.length) {
-      apiUrl = apiUrl.concat(`&type=${questionType}`)
-    }
+//     if (questionType.length) {
+//       apiUrl = apiUrl.concat(`&type=${questionType}`)
+//     }
 
-    setLoading(true)
+//     setLoading(true)
 
-    await fetch(apiUrl)
-      .then((res) => res.json())
-      .then((response) => {
-        setQuestions(response.results)
-        setLoading(false)
-      })
+//     await fetch(apiUrl)
+//       .then((res) => res.json())
+//       .then((response) => {
+//         setQuestions(response.results)
+//         setLoading(false)
+//       })
 
-    if (questionIndex > 0) {
-      dispatch({
-        type: 'SET_INDEX',
-        index: 0,
-      })
+//     if (questionIndex > 0) {
+//       dispatch({
+//         type: 'SET_INDEX',
+//         index: 0,
+//       })
 
-      dispatch({
-        type: 'SET_SCORE',
-        score: 0,
-      })
-    }
-  }
+//       dispatch({
+//         type: 'SET_SCORE',
+//         score: 0,
+//       })
+//     }
+//   }
 
-  return <button onClick={handleQuery}>{props.text}</button>
-}
+//   return <button onClick={handleQuery}>{props.text}</button>
+// }
 
