@@ -50,6 +50,7 @@ function Settings() {
 
 if (!loading) {
 	  return (
+      <main id="appMain">
       <div>
         <h1>Quizz App</h1>
         <div>
@@ -67,6 +68,7 @@ if (!loading) {
       <QuestionSelect />
       <button onClick={handleNext}>Next</button>
       </div>
+      </main>
     )
   } else {
       <p>
