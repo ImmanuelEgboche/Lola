@@ -9,11 +9,11 @@
     "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
     "coverage": "jest --testPathPattern=/unit/ --coverage"
   },
-    "jest": {
-      "testPathIgnorePatterns" : [
-        "Lola/api/tests2/models" 
-      ]
-    },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "Lola/api/tests2/models"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ImmanuelEgboche/Lola.git"
