@@ -12,7 +12,7 @@ class Player{
             try {
                 const playersData = await db.query(`SELECT * FROM players;`)
                 const players = playersData.rows.map(d => new Player(d))
-                console.log(`This is models:${players}`)
+                // console.log(`This is models:${players}`)
                 resolve(players);
             } catch (err) {
                 reject("Error retrieving players")
@@ -24,7 +24,8 @@ class Player{
 		return new Promise(async (res, rej) => {
 			
 			try {
-                console.log(username, score)
+                console.log(`current username: ${username}`)
+                console.log(`current score: ${score}`)
 				let result = await db.query(
 					`INSERT INTO players (username, score) VALUES ($1, $2) RETURNING *;`,
 					[username, score]
