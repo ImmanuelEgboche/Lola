@@ -1,4 +1,4 @@
-# Lola Quizz
+# LOLA Quizz
 A quiz built using React and Redux.
 
 ## Installation & usage
@@ -16,16 +16,16 @@ A quiz built using React and Redux.
 - Webpack
 - JavaScript
 - HTML, CSS
+- Node.js
 ## Process
-- Started by wireframing the pages in Figma
+- Started planning the app design and features using Excalidraw.
 - Wrote pseudo code to break down the logic of collecting user input, collecting information from the API, linking the two and assigning functionality to buttons.
 - Used Webpack to configure our server and development setup.
-- Compartmentalised quiz functionality into separate components for clarity and ease of teamwork.
+- Compartmentalised quiz functionality into separate folders and components for clarity.
 
 ## Challenges
-- Routing
-- Predicting length of time certain tasks will take
-- Implementing Redux
+- Creating the Redux store
+- Errors which caused us to spend longer on tasks than planned
 - Testing
 
 ## Future features
